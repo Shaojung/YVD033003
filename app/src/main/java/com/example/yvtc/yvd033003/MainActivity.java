@@ -2,17 +2,20 @@ package com.example.yvtc.yvd033003;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<String> data = new ArrayList<>();
-
+    MyAdapter adapter;
     ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +34,34 @@ public class MainActivity extends AppCompatActivity {
         data.add("AA10");
         data.add("AA11");
         data.add("AA12");
-        MyAdapter adapter = new MyAdapter(MainActivity.this, data);
+        adapter = new MyAdapter(MainActivity.this, data);
 
         lv.setAdapter(adapter);
-
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add("Show");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getTitle().equals("Show"))
+        {
+            StringBuilder sb = new StringBuilder();
+            int i;
+            for (i=0;i<adapter.chks.length;i++)
+            {
+                if (adapter.chks[i])
+                {
+                    sb.append(data.get(i) + ",");
+                }
+            }
+            Toast.makeText(MainActivity.this, sb.toString(), Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 
